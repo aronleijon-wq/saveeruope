@@ -116,7 +116,7 @@ const Index = () => {
               You feel it, don't you? That gut instinct that tells you your country is worth fighting for. That your culture isn't a museum piece—it’s your lifeblood.
             </p>
             <p>
-              MEGA is for the ones who still give a damn. When you put on that cap, you aren’t just "wearing a brand." You’re sending a message. You’re telling the world that you haven't forgotten where you came from. You’re finding the others—the people who still believe in their flag, their community, and their right to stand tall without asking for permission.
+              MEGA is for the ones who still give a damn. When you put on that cap, you aren’t just "wearing a brand." You’re sending a message. You’re telling the world that you haven't forgotten where you came from. You’re finding the others, the people who still believe in their flag, their community, and their right to stand tall without asking for permission.
             </p>
             <p>
               We aren't a "market." We’re a movement of people who are finally waking up. From the small towns to the big cities, we’re reclaiming what’s ours. No more apologies. No more backing down.
