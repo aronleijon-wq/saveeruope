@@ -1,8 +1,9 @@
 import { Button } from "@/components/ui/button";
-import { Loader2, Plus } from "lucide-react";
+import { Loader2, Plus, Check } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 import { ShopifyProduct } from "@/lib/shopify";
 import { toast } from "sonner";
+import { useState } from "react";
 
 interface Props {
   product: ShopifyProduct;
@@ -10,13 +11,17 @@ interface Props {
 
 export const ProductCard = ({ product }: Props) => {
   const addItem = useCartStore((s) => s.addItem);
-  const isLoading = useCartStore((s) => s.isLoading);
+  const isPending = useCartStore((s) => s.isPending(product.node.variants.edges[0]?.node?.id || ""));
+  const [justAdded, setJustAdded] = useState(false);
   const variant = product.node.variants.edges[0]?.node;
   const image = product.node.images.edges[0]?.node;
   const price = product.node.priceRange.minVariantPrice;
 
   const handleAdd = async () => {
     if (!variant) return;
+    setJustAdded(true);
+    setTimeout(() => setJustAdded(false), 1200);
+    toast.success("Added to cart", { position: "top-center" });
     await addItem({
       product,
       variantId: variant.id,
@@ -25,22 +30,22 @@ export const ProductCard = ({ product }: Props) => {
       quantity: 1,
       selectedOptions: variant.selectedOptions || [],
     });
-    toast.success("Added to cart", { position: "top-center" });
   };
 
   return (
-    <div className="group relative bg-card rounded-xl overflow-hidden border border-border shadow-sm hover:shadow-elegant transition-[var(--transition-smooth)]">
-      <div className="aspect-square bg-secondary overflow-hidden">
+    <div className="group relative bg-card rounded-xl overflow-hidden border border-border shadow-sm hover:shadow-elegant hover:-translate-y-1 transition-all duration-500">
+      <div className="aspect-square bg-secondary overflow-hidden relative">
         {image ? (
           <img
             src={image.url}
             alt={image.altText || product.node.title}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
             loading="lazy"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-muted-foreground">No image</div>
         )}
+        <div className="absolute inset-0 bg-gradient-to-t from-primary/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
       </div>
       <div className="p-5 space-y-3">
         <div>
@@ -51,8 +56,24 @@ export const ProductCard = ({ product }: Props) => {
           <span className="text-xl font-bold text-primary">
             {price.currencyCode} {parseFloat(price.amount).toFixed(2)}
           </span>
-          <Button onClick={handleAdd} disabled={isLoading || !variant?.availableForSale} className="bg-primary hover:bg-primary-glow">
-            {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <><Plus className="w-4 h-4 mr-1" />Add</>}
+          <Button
+            onClick={handleAdd}
+            disabled={!variant?.availableForSale}
+            className="bg-primary hover:bg-primary-glow active:scale-95 transition-transform overflow-hidden relative min-w-[90px]"
+          >
+            {justAdded ? (
+              <span className="flex items-center animate-scale-in">
+                <Check className="w-4 h-4 mr-1" />
+                Added
+              </span>
+            ) : isPending ? (
+              <Loader2 className="w-4 h-4 animate-spin" />
+            ) : (
+              <span className="flex items-center">
+                <Plus className="w-4 h-4 mr-1" />
+                Add
+              </span>
+            )}
           </Button>
         </div>
       </div>
