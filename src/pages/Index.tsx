@@ -81,49 +81,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Flags Collection */}
-      <section className="container py-20 border-t border-border">
-        <div className="max-w-2xl mx-auto text-center mb-14 space-y-3">
-          <p className="text-xs tracking-[0.3em] uppercase text-muted-foreground">Choose your colours</p>
-          <h2 className="font-display text-3xl md:text-4xl font-bold">Flags Available</h2>
-          <p className="text-sm text-muted-foreground">
-            Wear your nation. Every cap, every flag — proudly European.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4 md:gap-6">
-          {[
-            { flag: "🇪🇺", name: "European Union" },
-            { flag: "🇸🇪", name: "Sweden" },
-            { flag: "🇫🇷", name: "France" },
-            { flag: "🇩🇪", name: "Germany" },
-            { flag: "🇮🇹", name: "Italy" },
-            { flag: "🇨🇭", name: "Switzerland" },
-            { flag: "🇦🇹", name: "Austria" },
-            { flag: "🇳🇱", name: "Netherlands" },
-            { flag: "🇩🇰", name: "Denmark" },
-            { flag: "🇧🇪", name: "Belgium" },
-            { flag: "🇬🇧", name: "United Kingdom" },
-            { flag: "🇪🇸", name: "Spain" },
-            { flag: "🇵🇱", name: "Poland" },
-          ].map((item, i) => (
-            <button
-              key={item.name}
-              onClick={scrollToProducts}
-              style={{ animationDelay: `${i * 40}ms` }}
-              className="group relative flex flex-col items-center justify-center gap-3 p-5 border border-border bg-card hover:bg-accent hover:border-foreground/30 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg animate-scale-in"
-            >
-              <span className="text-4xl md:text-5xl transition-transform duration-300 group-hover:scale-110 group-hover:animate-flag-wave">
-                {item.flag}
-              </span>
-              <span className="text-[11px] md:text-xs font-medium tracking-wide text-center text-muted-foreground group-hover:text-foreground transition-colors">
-                {item.name}
-              </span>
-            </button>
-          ))}
-        </div>
-      </section>
-
       {/* Shop */}
       <section id="shop" className="container py-20 border-t border-border">
         <div className="mb-12 flex items-end justify-between">
