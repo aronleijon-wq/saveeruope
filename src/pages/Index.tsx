@@ -81,49 +81,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Flags Collection */}
-      <section className="container py-20 border-t border-border">
-        <div className="max-w-2xl mx-auto text-center mb-14 space-y-3">
-          <p className="text-xs tracking-[0.3em] uppercase text-muted-foreground">Choose your colours</p>
-          <h2 className="font-display text-3xl md:text-4xl font-bold">Flags Available</h2>
-          <p className="text-sm text-muted-foreground">
-            Wear your nation. Every cap, every flag — proudly European.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4 md:gap-6">
-          {[
-            { flag: "🇪🇺", name: "European Union" },
-            { flag: "🇸🇪", name: "Sweden" },
-            { flag: "🇫🇷", name: "France" },
-            { flag: "🇩🇪", name: "Germany" },
-            { flag: "🇮🇹", name: "Italy" },
-            { flag: "🇨🇭", name: "Switzerland" },
-            { flag: "🇦🇹", name: "Austria" },
-            { flag: "🇳🇱", name: "Netherlands" },
-            { flag: "🇩🇰", name: "Denmark" },
-            { flag: "🇧🇪", name: "Belgium" },
-            { flag: "🇬🇧", name: "United Kingdom" },
-            { flag: "🇪🇸", name: "Spain" },
-            { flag: "🇵🇱", name: "Poland" },
-          ].map((item, i) => (
-            <button
-              key={item.name}
-              onClick={scrollToProducts}
-              style={{ animationDelay: `${i * 40}ms` }}
-              className="group relative flex flex-col items-center justify-center gap-3 p-5 border border-border bg-card hover:bg-accent hover:border-foreground/30 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg animate-scale-in"
-            >
-              <span className="text-4xl md:text-5xl transition-transform duration-300 group-hover:scale-110 group-hover:animate-flag-wave">
-                {item.flag}
-              </span>
-              <span className="text-[11px] md:text-xs font-medium tracking-wide text-center text-muted-foreground group-hover:text-foreground transition-colors">
-                {item.name}
-              </span>
-            </button>
-          ))}
-        </div>
-      </section>
-
       {/* Shop */}
       <section id="shop" className="container py-20 border-t border-border">
         <div className="mb-12 flex items-end justify-between">
@@ -173,6 +130,66 @@ const Index = () => {
             </p>
           </div>
           <p className="font-display text-lg italic text-foreground pt-2">"Make Europe Great Again."</p>
+        </div>
+      </section>
+
+      {/* Flag Showcase — animated marquee */}
+      <section className="relative py-20 border-t border-border overflow-hidden bg-gradient-to-b from-background via-accent/20 to-background">
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="absolute -top-20 left-1/4 w-72 h-72 rounded-full bg-primary/10 blur-3xl animate-glow-pulse" />
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 rounded-full bg-primary/5 blur-3xl animate-glow-pulse" style={{ animationDelay: "2s" }} />
+        </div>
+
+        <div className="relative text-center mb-12 space-y-3">
+          <p className="text-xs tracking-[0.4em] uppercase text-muted-foreground animate-fade-in">United we stand</p>
+          <h2 className="font-display text-3xl md:text-5xl font-bold animate-fade-in">One movement. Many flags.</h2>
+        </div>
+
+        <div className="relative flex overflow-hidden mask-fade">
+          <div className="flex shrink-0 animate-marquee gap-10 pr-10">
+            {[...Array(2)].flatMap((_, dup) =>
+              ["🇪🇺","🇸🇪","🇫🇷","🇩🇪","🇮🇹","🇨🇭","🇦🇹","🇳🇱","🇩🇰","🇧🇪","🇬🇧","🇪🇸","🇵🇱"].map((flag, i) => (
+                <div
+                  key={`r1-${dup}-${i}`}
+                  className="group relative flex items-center justify-center w-28 h-28 md:w-36 md:h-36 shrink-0"
+                >
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary/20 to-transparent opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500" />
+                  <span
+                    className="relative text-6xl md:text-7xl animate-float-slow drop-shadow-2xl transition-transform duration-500 group-hover:scale-125 group-hover:animate-flag-wave"
+                    style={{ animationDelay: `${i * 200}ms` }}
+                  >
+                    {flag}
+                  </span>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+
+        <div className="relative flex overflow-hidden mask-fade mt-6">
+          <div className="flex shrink-0 animate-marquee-reverse gap-10 pr-10">
+            {[...Array(2)].flatMap((_, dup) =>
+              ["🇵🇱","🇪🇸","🇬🇧","🇧🇪","🇩🇰","🇳🇱","🇦🇹","🇨🇭","🇮🇹","🇩🇪","🇫🇷","🇸🇪","🇪🇺"].map((flag, i) => (
+                <div
+                  key={`r2-${dup}-${i}`}
+                  className="group relative flex items-center justify-center w-24 h-24 md:w-32 md:h-32 shrink-0 opacity-80"
+                >
+                  <span
+                    className="relative text-5xl md:text-6xl animate-float-slow transition-transform duration-500 group-hover:scale-125"
+                    style={{ animationDelay: `${i * 150 + 100}ms` }}
+                  >
+                    {flag}
+                  </span>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+
+        <div className="relative text-center mt-12">
+          <p className="font-display text-lg md:text-xl italic text-foreground/80">
+            Wear yours. <span className="text-foreground font-semibold not-italic">Stand tall.</span>
+          </p>
         </div>
       </section>
 
