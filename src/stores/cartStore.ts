@@ -103,13 +103,24 @@ interface CartStore {
   checkoutUrl: string | null;
   isLoading: boolean;
   isSyncing: boolean;
+  pendingVariants: string[];
+  lastAddedAt: number;
   addItem: (item: Omit<CartItem, "lineId">) => Promise<void>;
   updateQuantity: (variantId: string, quantity: number) => Promise<void>;
   removeItem: (variantId: string) => Promise<void>;
   clearCart: () => void;
   syncCart: () => Promise<void>;
   getCheckoutUrl: () => string | null;
+  isPending: (variantId: string) => boolean;
 }
+
+const setPending = (set: (fn: (s: CartStore) => Partial<CartStore>) => void, variantId: string, on: boolean) => {
+  set((s) => ({
+    pendingVariants: on
+      ? [...s.pendingVariants, variantId]
+      : s.pendingVariants.filter((v) => v !== variantId),
+  }));
+};
 
 export const useCartStore = create<CartStore>()(
   persist(
@@ -119,28 +130,73 @@ export const useCartStore = create<CartStore>()(
       checkoutUrl: null,
       isLoading: false,
       isSyncing: false,
+      pendingVariants: [],
+      lastAddedAt: 0,
+
+      isPending: (variantId) => get().pendingVariants.includes(variantId),
 
       addItem: async (item) => {
         const { items, cartId, clearCart } = get();
         const existing = items.find((i) => i.variantId === item.variantId);
-        set({ isLoading: true });
+        setPending(set, item.variantId, true);
+        // Optimistic UI: bump quantity / insert immediately
+        if (existing) {
+          set({
+            items: get().items.map((i) =>
+              i.variantId === item.variantId ? { ...i, quantity: i.quantity + item.quantity } : i
+            ),
+            lastAddedAt: Date.now(),
+          });
+        } else {
+          set({
+            items: [...get().items, { ...item, lineId: null }],
+            lastAddedAt: Date.now(),
+          });
+        }
+
         try {
           if (!cartId) {
             const result = await createShopifyCart({ ...item, lineId: null });
-            if (result) set({ cartId: result.cartId, checkoutUrl: result.checkoutUrl, items: [{ ...item, lineId: result.lineId }] });
+            if (result) {
+              set({
+                cartId: result.cartId,
+                checkoutUrl: result.checkoutUrl,
+                items: get().items.map((i) =>
+                  i.variantId === item.variantId ? { ...i, lineId: result.lineId } : i
+                ),
+              });
+            } else {
+              // rollback
+              set({ items: get().items.filter((i) => i.variantId !== item.variantId) });
+            }
           } else if (existing) {
             if (!existing.lineId) return;
             const newQty = existing.quantity + item.quantity;
             const r = await updateLine(cartId, existing.lineId, newQty);
-            if (r.success) set({ items: get().items.map((i) => (i.variantId === item.variantId ? { ...i, quantity: newQty } : i)) });
-            else if (r.cartNotFound) clearCart();
+            if (!r.success) {
+              if (r.cartNotFound) clearCart();
+              else
+                set({
+                  items: get().items.map((i) =>
+                    i.variantId === item.variantId ? { ...i, quantity: existing.quantity } : i
+                  ),
+                });
+            }
           } else {
             const r = await addLine(cartId, { ...item, lineId: null });
-            if (r.success) set({ items: [...get().items, { ...item, lineId: r.lineId ?? null }] });
-            else if (r.cartNotFound) clearCart();
+            if (r.success) {
+              set({
+                items: get().items.map((i) =>
+                  i.variantId === item.variantId ? { ...i, lineId: r.lineId ?? null } : i
+                ),
+              });
+            } else {
+              if (r.cartNotFound) clearCart();
+              else set({ items: get().items.filter((i) => i.variantId !== item.variantId) });
+            }
           }
         } finally {
-          set({ isLoading: false });
+          setPending(set, item.variantId, false);
         }
       },
 
@@ -149,13 +205,21 @@ export const useCartStore = create<CartStore>()(
         const { items, cartId, clearCart } = get();
         const item = items.find((i) => i.variantId === variantId);
         if (!item?.lineId || !cartId) return;
-        set({ isLoading: true });
+        const prevQty = item.quantity;
+        // Optimistic
+        set({ items: get().items.map((i) => (i.variantId === variantId ? { ...i, quantity } : i)) });
+        setPending(set, variantId, true);
         try {
           const r = await updateLine(cartId, item.lineId, quantity);
-          if (r.success) set({ items: get().items.map((i) => (i.variantId === variantId ? { ...i, quantity } : i)) });
-          else if (r.cartNotFound) clearCart();
+          if (!r.success) {
+            if (r.cartNotFound) clearCart();
+            else
+              set({
+                items: get().items.map((i) => (i.variantId === variantId ? { ...i, quantity: prevQty } : i)),
+              });
+          }
         } finally {
-          set({ isLoading: false });
+          setPending(set, variantId, false);
         }
       },
 
@@ -163,19 +227,26 @@ export const useCartStore = create<CartStore>()(
         const { items, cartId, clearCart } = get();
         const item = items.find((i) => i.variantId === variantId);
         if (!item?.lineId || !cartId) return;
-        set({ isLoading: true });
+        const snapshot = items;
+        // Optimistic
+        const next = items.filter((i) => i.variantId !== variantId);
+        set({ items: next });
+        setPending(set, variantId, true);
         try {
           const r = await removeLine(cartId, item.lineId);
           if (r.success) {
-            const next = get().items.filter((i) => i.variantId !== variantId);
-            next.length === 0 ? clearCart() : set({ items: next });
-          } else if (r.cartNotFound) clearCart();
+            if (get().items.length === 0) clearCart();
+          } else if (r.cartNotFound) {
+            clearCart();
+          } else {
+            set({ items: snapshot });
+          }
         } finally {
-          set({ isLoading: false });
+          setPending(set, variantId, false);
         }
       },
 
-      clearCart: () => set({ items: [], cartId: null, checkoutUrl: null }),
+      clearCart: () => set({ items: [], cartId: null, checkoutUrl: null, pendingVariants: [] }),
       getCheckoutUrl: () => get().checkoutUrl,
 
       syncCart: async () => {
