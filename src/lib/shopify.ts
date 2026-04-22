@@ -32,6 +32,31 @@ export interface ShopifyProduct {
   };
 }
 
+export const PRODUCT_BY_HANDLE_QUERY = `
+  query GetProductByHandle($handle: String!) {
+    product(handle: $handle) {
+      id
+      title
+      description
+      handle
+      priceRange { minVariantPrice { amount currencyCode } }
+      images(first: 10) { edges { node { url altText } } }
+      variants(first: 50) {
+        edges {
+          node {
+            id title
+            price { amount currencyCode }
+            availableForSale
+            image { url altText }
+            selectedOptions { name value }
+          }
+        }
+      }
+      options { name values }
+    }
+  }
+`;
+
 export const PRODUCTS_QUERY = `
   query GetProducts($first: Int!, $query: String) {
     products(first: $first, query: $query) {
