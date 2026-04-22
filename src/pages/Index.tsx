@@ -113,7 +113,7 @@ const Index = () => {
               For years, we’ve watched the suits in distant offices try to blur the lines of who we are. They tell us that borders are just lines on a map and that our traditions don't matter anymore. But they’re wrong.
             </p>
             <p>
-              You feel it, don't you? That gut instinct that tells you your country is worth fighting for. That your culture isn't a museum piece—it’s your lifeblood.
+              You feel it, don't you? That gut instinct that tells you your country is worth fighting for. That your culture isn't a museum piece it’s your lifeblood.
             </p>
             <p>
               MEGA is for the ones who still give a damn. When you put on that cap, you aren’t just "wearing a brand." You’re sending a message. You’re telling the world that you haven't forgotten where you came from. You’re finding the others, the people who still believe in their flag, their community, and their right to stand tall without asking for permission.
