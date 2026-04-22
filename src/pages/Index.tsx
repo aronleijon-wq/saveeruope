@@ -4,7 +4,7 @@ import { CartDrawer } from "@/components/CartDrawer";
 import { ProductCard } from "@/components/ProductCard";
 import { useCartSync } from "@/hooks/useCartSync";
 import { storefrontApiRequest, PRODUCTS_QUERY, ShopifyProduct } from "@/lib/shopify";
-import heroCap from "@/assets/hero-cap.jpg";
+import heroCap from "@/assets/hero-cap.webp";
 import { Loader2, Star, Truck, Shield } from "lucide-react";
 
 const Index = () => {
