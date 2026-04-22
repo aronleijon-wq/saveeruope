@@ -107,7 +107,7 @@ const Index = () => {
           <h2 className="font-display text-3xl md:text-4xl font-bold">For a Europe that stands tall.</h2>
           <div className="space-y-4 text-muted-foreground leading-relaxed">
             <p>
-              I didn’t start MEGA because I wanted to sell hats. I started it because I was tired of looking around and not recognizing my own home. I was tired of being told—by people who don’t live our lives—that our history is a problem and our pride is something we should hide.
+              I didn’t start MEGA because I wanted to sell hats. I started it because I was tired of looking around and not recognizing my own home. I was tired of being told by people who don’t live our lives—that our history is a problem and our pride is something we should hide.
             </p>
             <p>
               For years, we’ve watched the suits in distant offices try to blur the lines of who we are. They tell us that borders are just lines on a map and that our traditions don't matter anymore. But they’re wrong.
