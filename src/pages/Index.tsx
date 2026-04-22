@@ -85,7 +85,7 @@ const Index = () => {
       <section id="shop" className="container py-20 border-t border-border">
         <div className="mb-12 flex items-end justify-between">
           <h2 className="font-display text-3xl md:text-4xl font-bold">The Collection</h2>
-          <span className="text-sm text-muted-foreground hidden md:block">Limited drops, made in Europe.</span>
+          <span className="text-sm text-muted-foreground hidden md:block">Limited drops</span>
         </div>
 
         {loading ? (
