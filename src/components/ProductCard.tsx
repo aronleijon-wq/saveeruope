@@ -1,9 +1,10 @@
 import { Button } from "@/components/ui/button";
-import { Loader2, Plus, Check } from "lucide-react";
+import { Loader2, Plus, Check, ArrowRight } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 import { ShopifyProduct } from "@/lib/shopify";
 import { toast } from "sonner";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 interface Props {
   product: ShopifyProduct;
