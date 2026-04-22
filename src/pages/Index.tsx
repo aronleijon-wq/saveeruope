@@ -105,9 +105,23 @@ const Index = () => {
       <section id="story" className="container py-24 border-t border-border">
         <div className="max-w-2xl mx-auto text-center space-y-6">
           <h2 className="font-display text-3xl md:text-4xl font-bold">For a Europe that stands tall.</h2>
-          <p className="text-muted-foreground leading-relaxed">
-            MEGA is a tribute to shared history and shared values — the belief that Europe's best chapters aren't behind us. From Sweden to Spain, Germany to Greece: one continent, one spirit.
-          </p>
+          <div className="space-y-4 text-muted-foreground leading-relaxed">
+            <p>
+              I didn’t start MEGA because I wanted to sell hats. I started it because I was tired of looking around and not recognizing my own home. I was tired of being told—by people who don’t live our lives—that our history is a problem and our pride is something we should hide.
+            </p>
+            <p>
+              For years, we’ve watched the suits in distant offices try to blur the lines of who we are. They tell us that borders are just lines on a map and that our traditions don't matter anymore. But they’re wrong.
+            </p>
+            <p>
+              You feel it, don't you? That gut instinct that tells you your country is worth fighting for. That your culture isn't a museum piece—it’s your lifeblood.
+            </p>
+            <p>
+              MEGA is for the ones who still give a damn. When you put on that cap, you aren’t just "wearing a brand." You’re sending a message. You’re telling the world that you haven't forgotten where you came from. You’re finding the others—the people who still believe in their flag, their community, and their right to stand tall without asking for permission.
+            </p>
+            <p>
+              We aren't a "market." We’re a movement of people who are finally waking up. From the small towns to the big cities, we’re reclaiming what’s ours. No more apologies. No more backing down.
+            </p>
+          </div>
           <p className="font-display text-lg italic text-foreground pt-2">"Make Europe Great Again."</p>
         </div>
       </section>
