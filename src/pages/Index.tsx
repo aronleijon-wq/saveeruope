@@ -73,14 +73,16 @@ const Index = () => {
               </Button>
             </div>
           </div>
-          <div>
-            <img
-              src={heroCap}
-              alt="MEGA navy cap — Make Europe Great Again"
-              width={1600}
-              height={1024}
-              className="w-full object-cover aspect-[4/3]"
-            />
+          <div className="eu-logo">
+            <div className="eu-logo-inner">
+              <img
+                src={heroCap}
+                alt="MEGA navy cap — Make Europe Great Again"
+                width={1600}
+                height={1024}
+                className="w-full object-cover aspect-[4/3]"
+              />
+            </div>
           </div>
         </div>
       </section>
