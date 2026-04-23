@@ -35,12 +35,14 @@ const Index = () => {
         <div className="container flex items-center justify-between h-16">
           <a href="/" className="flex items-center gap-2.5 font-sans text-sm font-semibold tracking-[0.2em] uppercase">
             <span className="eu-logo">
-              <img
-                src={euFlag}
-                alt="MEGA — Make Europe Great Again"
-                className="h-7 w-auto"
-                loading="eager"
-              />
+              <span className="eu-logo-inner">
+                <img
+                  src={euFlag}
+                  alt="MEGA — Make Europe Great Again"
+                  className="h-7 w-auto"
+                  loading="eager"
+                />
+              </span>
             </span>
             Mega
           </a>
