@@ -34,12 +34,14 @@ const Index = () => {
       <header className="sticky top-0 z-40 bg-background/90 backdrop-blur border-b border-border">
         <div className="container flex items-center justify-between h-16">
           <a href="/" className="flex items-center gap-2.5 font-sans text-sm font-semibold tracking-[0.2em] uppercase">
-            <img
-              src={euFlag}
-              alt="MEGA — Make Europe Great Again"
-              className="h-7 w-auto rounded-sm shadow-sm"
-              loading="eager"
-            />
+            <span className="eu-logo">
+              <img
+                src={euFlag}
+                alt="MEGA — Make Europe Great Again"
+                className="h-7 w-auto"
+                loading="eager"
+              />
+            </span>
             Mega
           </a>
           <nav className="hidden md:flex items-center gap-10 text-sm text-muted-foreground">
