@@ -172,27 +172,28 @@ const Index = () => {
             <div className="space-y-6 text-muted-foreground text-base md:text-lg leading-relaxed">
               <Reveal>
                 <p className="font-display text-xl md:text-2xl text-foreground leading-snug">
-                  I didn’t start MEGA to sell caps. I started it because I couldn’t just sit and watch anymore.
+                  I didn’t start MEGA because I wanted to sell hats. I started it because I couldn’t keep watching
+                  from the sidelines.
                 </p>
               </Reveal>
               <Reveal>
                 <p>
-                  Every day I follow what’s happening in our European neighbours — countries I love, places whose
-                  stories are woven into my own. And more and more, I found myself asking the same question: who is
-                  standing up for all of this? For the small towns, the traditions, the history that made us who we are?
+                  Every day I see what’s happening across our European neighbours — countries I love, places whose
+                  stories are woven into my own. And I got tired of being told that our history is a problem, and that
+                  our pride is something we should hide.
                 </p>
               </Reveal>
               <Reveal>
                 <p>
-                  I’m not a politician. I don’t have a big platform. But I believe even something small can mean
-                  something. A cap. A symbol. A quiet way of saying: I care about where I come from — and I care about
-                  where you come from too.
+                  For years we’ve been told that borders are just lines on a map and that our traditions don’t matter
+                  anymore. But they’re wrong. A Swedish midsummer, a French village square, a German Christmas market,
+                  an Italian piazza — these aren’t museum pieces. They’re our lifeblood.
                 </p>
               </Reveal>
               <Reveal>
-                <p>
-                  Because Europe has never been just one thing. It’s midsummer in Sweden and cafés in Paris, German
-                  craftsmanship and Italian piazzas, Polish resilience and Spanish evenings that never seem to end.
+                <p className="text-foreground font-medium">
+                  You feel it, don’t you? That gut instinct that tells you your country is worth standing up for — and
+                  that your neighbour’s is too.
                 </p>
               </Reveal>
 
@@ -206,9 +207,21 @@ const Index = () => {
 
               <Reveal>
                 <p>
-                  That’s what MEGA is about. Not anger — pride. Not standing apart, but standing together, the way
-                  neighbours do when it matters most. Every time you wear it, you’re showing love for your country’s
-                  history, and standing with everyone else who feels the same.
+                  MEGA is for the ones who still give a damn. When you put on that cap, you aren’t just “wearing a
+                  brand.” You’re sending a message. You’re telling the world you haven’t forgotten where you came from.
+                  You’re finding the others — the people who still believe in their flag, their community, and their
+                  right to stand tall without asking for permission.
+                </p>
+              </Reveal>
+              <Reveal>
+                <p>
+                  We aren’t a “market.” We’re a movement. From the small towns to the big cities, across every border
+                  on this continent, we stand together when it matters most.
+                </p>
+              </Reveal>
+              <Reveal>
+                <p className="font-display text-xl md:text-2xl font-bold text-foreground">
+                  No more apologies. No more backing down.
                 </p>
               </Reveal>
               <Reveal>
