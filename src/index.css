@@ -123,6 +123,12 @@
     -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
   }
 
+  /* Soft radial fade so a block of colour dissolves into the page */
+  .mask-melt {
+    mask-image: radial-gradient(closest-side, black 25%, rgb(0 0 0 / 0.55) 55%, transparent 100%);
+    -webkit-mask-image: radial-gradient(closest-side, black 25%, rgb(0 0 0 / 0.55) 55%, transparent 100%);
+  }
+
   /* EU flag logo: cinematic hover */
   .eu-logo {
     position: relative;
@@ -139,7 +145,8 @@
     box-shadow: 0 1px 3px hsl(222 65% 18% / 0.2);
     transition: box-shadow 0.5s ease;
   }
-  .eu-logo img {
+  .eu-logo img,
+  .eu-logo svg {
     display: block;
     transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.5s ease;
   }
@@ -170,7 +177,8 @@
   .eu-logo:hover .eu-logo-inner {
     box-shadow: 0 8px 24px -4px hsl(45 95% 50% / 0.7), 0 0 0 1px hsl(45 95% 60% / 0.6);
   }
-  .eu-logo:hover img {
+  .eu-logo:hover img,
+  .eu-logo:hover svg {
     transform: scale(1.12);
     filter: brightness(1.2) saturate(1.4);
   }

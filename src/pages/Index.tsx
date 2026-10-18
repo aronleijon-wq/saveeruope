@@ -4,7 +4,6 @@ import { Reveal } from "@/components/Reveal";
 import { ScrollProgress } from "@/components/ScrollProgress";
 import { StarRing } from "@/components/StarRing";
 import heroCap from "@/assets/hero-cap.jpg";
-import euFlag from "@/assets/eu-flag.webp";
 
 const flagRow: FlagCode[] = ["eu", "se", "fr", "de", "it", "ch", "at", "nl", "dk", "be", "gb", "es", "pl"];
 
@@ -34,12 +33,7 @@ const Index = () => {
           <a href="/" className="flex items-center gap-2.5 font-sans text-sm font-semibold tracking-[0.2em] uppercase">
             <span className="eu-logo">
               <span className="eu-logo-inner">
-                <img
-                  src={euFlag}
-                  alt="MEGA — Make Europe Great Again"
-                  className="h-7 w-auto"
-                  loading="eager"
-                />
+                <Flag code="eu" className="h-7 w-[2.625rem]" />
               </span>
             </span>
             Mega
@@ -92,8 +86,10 @@ const Index = () => {
             </div>
 
             <div className="relative animate-rise" style={{ animationDelay: "400ms" }}>
+              {/* EU blue that melts out into the page behind the cap */}
+              <div className="pointer-events-none absolute -inset-x-[30%] -inset-y-[28%] mask-melt bg-[#003399] opacity-80" />
               <div className="pointer-events-none absolute left-1/2 top-1/2 w-[118%] -translate-x-1/2 -translate-y-1/2">
-                <StarRing className="w-full text-accent/50 animate-spin-slow" />
+                <StarRing className="w-full text-accent/70 animate-spin-slow" />
               </div>
               <div className="relative overflow-hidden shadow-elegant">
                 <img
