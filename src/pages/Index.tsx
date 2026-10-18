@@ -1,33 +1,21 @@
-import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { CartDrawer } from "@/components/CartDrawer";
-import { ProductCard } from "@/components/ProductCard";
-import { useCartSync } from "@/hooks/useCartSync";
-import { storefrontApiRequest, PRODUCTS_QUERY, ShopifyProduct } from "@/lib/shopify";
-import heroCap from "@/assets/hero-cap.webp";
+import { Flag, FlagCode } from "@/components/Flag";
+import heroCap from "@/assets/hero-cap.jpg";
 import euFlag from "@/assets/eu-flag.webp";
-import { Loader2 } from "lucide-react";
+
+const flagRow: FlagCode[] = ["eu", "se", "fr", "de", "it", "ch", "at", "nl", "dk", "be", "gb", "es", "pl"];
+
+const upcoming = [
+  { name: "Tee", detail: "Heavyweight cotton, gold print" },
+  { name: "Hoodie", detail: "Navy fleece, embroidered chest" },
+  { name: "Stickers", detail: "Weatherproof, for laptop & car" },
+];
+
+const scrollTo = (id: string) => {
+  document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+};
 
 const Index = () => {
-  useCartSync();
-  const [products, setProducts] = useState<ShopifyProduct[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const data = await storefrontApiRequest(PRODUCTS_QUERY, { first: 24, query: null });
-        setProducts(data?.data?.products?.edges || []);
-      } finally {
-        setLoading(false);
-      }
-    })();
-  }, []);
-
-  const scrollToProducts = () => {
-    document.getElementById("shop")?.scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
     <div className="min-h-screen bg-background">
       {/* Nav */}
@@ -46,18 +34,21 @@ const Index = () => {
             </span>
             Mega
           </a>
-          <nav className="hidden md:flex items-center gap-10 text-sm text-muted-foreground">
-            <a href="#shop" className="hover:text-foreground transition-colors">Shop</a>
+          <nav className="flex items-center gap-6 md:gap-10 text-sm text-muted-foreground">
+            <a href="#collection" className="hover:text-foreground transition-colors">Collection</a>
             <a href="#story" className="hover:text-foreground transition-colors">Story</a>
           </nav>
-          <CartDrawer />
         </div>
       </header>
 
       {/* Hero */}
-      <section className="container py-20 md:py-28">
+      <section className="container py-16 md:py-28">
         <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
           <div className="space-y-8">
+            <p className="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.3em] uppercase text-muted-foreground">
+              <span className="w-2 h-2 rounded-full bg-accent animate-glow-pulse" />
+              First drop coming soon
+            </p>
             <h1 className="font-display text-5xl md:text-6xl font-bold leading-[1.05]">
               Make Europe<br />Great Again.
             </h1>
@@ -65,53 +56,71 @@ const Index = () => {
               A quiet statement for a stronger, united Europe. Crafted in the EU.
             </p>
             <div className="flex gap-3 pt-2">
-              <Button onClick={scrollToProducts} size="lg" className="rounded-none font-medium">
-                Shop
+              <Button onClick={() => scrollTo("collection")} size="lg" className="rounded-none font-medium">
+                See what's coming
               </Button>
-              <Button onClick={() => document.getElementById("story")?.scrollIntoView({ behavior: "smooth" })} size="lg" variant="ghost" className="rounded-none font-medium">
+              <Button onClick={() => scrollTo("story")} size="lg" variant="ghost" className="rounded-none font-medium">
                 Our story
               </Button>
             </div>
           </div>
-          <div className="eu-logo">
-            <div className="eu-logo-inner">
-              <img
-                src={heroCap}
-                alt="MEGA navy cap — Make Europe Great Again"
-                width={1600}
-                height={1024}
-                className="w-full object-cover aspect-[4/3]"
-              />
-            </div>
+          <div className="overflow-hidden shadow-elegant group">
+            <img
+              src={heroCap}
+              alt="MEGA navy cap with gold embroidery — Make Europe Great Again"
+              width={1600}
+              height={1024}
+              className="w-full object-cover aspect-[4/3] transition-transform duration-700 ease-out group-hover:scale-105"
+            />
           </div>
         </div>
       </section>
 
-      {/* Shop */}
-      <section id="shop" className="container py-20 border-t border-border">
-        <div className="mb-12 flex items-end justify-between">
+      {/* Collection — coming soon */}
+      <section id="collection" className="container py-20 border-t border-border">
+        <div className="mb-12 flex items-end justify-between gap-4">
           <h2 className="font-display text-3xl md:text-4xl font-bold">The Collection</h2>
-          <span className="text-sm text-muted-foreground hidden md:block">Limited drops</span>
+          <span className="text-sm text-muted-foreground">Coming soon</span>
         </div>
 
-        {loading ? (
-          <div className="flex justify-center py-20">
-            <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
-          </div>
-        ) : products.length === 0 ? (
-          <div className="max-w-xl mx-auto text-center py-16 px-6 border border-border">
-            <h3 className="font-display text-xl font-semibold mb-2">No products yet</h3>
-            <p className="text-sm text-muted-foreground">
-              Tell me what to add (e.g. "Add a navy MEGA cap for €39").
-            </p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {products.map((p) => (
-              <ProductCard key={p.node.id} product={p} />
-            ))}
-          </div>
-        )}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+          <article className="group bg-card border border-border overflow-hidden">
+            <div className="relative aspect-square overflow-hidden bg-secondary">
+              <img
+                src={heroCap}
+                alt="The MEGA Cap"
+                loading="lazy"
+                className="w-full h-full object-cover object-[70%_center] transition-transform duration-700 ease-out group-hover:scale-105"
+              />
+              <span className="absolute top-2 left-2 md:top-3 md:left-3 px-2 md:px-2.5 py-1 bg-accent text-accent-foreground text-[10px] font-semibold uppercase tracking-[0.2em]">
+                First drop
+              </span>
+            </div>
+            <div className="p-4 md:p-5">
+              <h3 className="font-display text-base md:text-xl font-bold">The MEGA Cap</h3>
+              <p className="text-xs md:text-sm text-muted-foreground mt-1">Navy cotton, gold embroidery</p>
+            </div>
+          </article>
+
+          {upcoming.map((item) => (
+            <article key={item.name} className="group bg-card border border-border overflow-hidden">
+              <div className="relative aspect-square overflow-hidden bg-gradient-hero flex items-center justify-center">
+                <Flag
+                  code="eu"
+                  className="absolute inset-0 w-full h-full opacity-10 transition-transform duration-700 ease-out group-hover:scale-110"
+                />
+                <span className="relative font-display text-2xl md:text-4xl font-bold text-accent">{item.name}</span>
+                <span className="absolute top-2 left-2 md:top-3 md:left-3 px-2 md:px-2.5 py-1 bg-background/90 text-foreground text-[10px] font-semibold uppercase tracking-[0.2em]">
+                  Coming soon
+                </span>
+              </div>
+              <div className="p-4 md:p-5">
+                <h3 className="font-display text-base md:text-xl font-bold">MEGA {item.name}</h3>
+                <p className="text-xs md:text-sm text-muted-foreground mt-1">{item.detail}</p>
+              </div>
+            </article>
+          ))}
+        </div>
       </section>
 
       {/* Story */}
@@ -154,18 +163,18 @@ const Index = () => {
         <div className="relative flex overflow-hidden mask-fade">
           <div className="flex shrink-0 animate-marquee gap-10 pr-10">
             {[...Array(2)].flatMap((_, dup) =>
-              ["🇪🇺","🇸🇪","🇫🇷","🇩🇪","🇮🇹","🇨🇭","🇦🇹","🇳🇱","🇩🇰","🇧🇪","🇬🇧","🇪🇸","🇵🇱"].map((flag, i) => (
+              flagRow.map((code, i) => (
                 <div
                   key={`r1-${dup}-${i}`}
                   className="group relative flex items-center justify-center w-28 h-28 md:w-36 md:h-36 shrink-0"
                 >
                   <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary/20 to-transparent opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500" />
-                  <span
-                    className="relative text-6xl md:text-7xl animate-float-slow drop-shadow-2xl transition-transform duration-500 group-hover:scale-125 group-hover:animate-flag-wave"
+                  <div
+                    className="relative animate-float-slow transition-transform duration-500 group-hover:scale-125"
                     style={{ animationDelay: `${i * 200}ms` }}
                   >
-                    {flag}
-                  </span>
+                    <Flag code={code} className="w-16 h-11 md:w-20 md:h-[3.375rem] rounded-sm shadow-lg" />
+                  </div>
                 </div>
               ))
             )}
@@ -175,17 +184,17 @@ const Index = () => {
         <div className="relative flex overflow-hidden mask-fade mt-6">
           <div className="flex shrink-0 animate-marquee-reverse gap-10 pr-10">
             {[...Array(2)].flatMap((_, dup) =>
-              ["🇵🇱","🇪🇸","🇬🇧","🇧🇪","🇩🇰","🇳🇱","🇦🇹","🇨🇭","🇮🇹","🇩🇪","🇫🇷","🇸🇪","🇪🇺"].map((flag, i) => (
+              [...flagRow].reverse().map((code, i) => (
                 <div
                   key={`r2-${dup}-${i}`}
                   className="group relative flex items-center justify-center w-24 h-24 md:w-32 md:h-32 shrink-0 opacity-80"
                 >
-                  <span
-                    className="relative text-5xl md:text-6xl animate-float-slow transition-transform duration-500 group-hover:scale-125"
+                  <div
+                    className="relative animate-float-slow transition-transform duration-500 group-hover:scale-125"
                     style={{ animationDelay: `${i * 150 + 100}ms` }}
                   >
-                    {flag}
-                  </span>
+                    <Flag code={code} className="w-14 h-9 md:w-16 md:h-11 rounded-sm shadow-md" />
+                  </div>
                 </div>
               ))
             )}
@@ -204,7 +213,7 @@ const Index = () => {
         <div className="container flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-muted-foreground">
           <div>© {new Date().getFullYear()} MEGA</div>
           <div className="flex gap-6">
-            <a href="#shop" className="hover:text-foreground transition-colors">Shop</a>
+            <a href="#collection" className="hover:text-foreground transition-colors">Collection</a>
             <a href="#story" className="hover:text-foreground transition-colors">Story</a>
           </div>
         </div>
