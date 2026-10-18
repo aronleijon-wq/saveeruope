@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { starPoints } from "@/lib/stars";
 
 // Inline SVG flags. Emoji flags render as letters ("SE", "FR") on Windows, so we draw them ourselves.
 
@@ -19,13 +20,6 @@ const horizontal = (a: string, b: string, c: string) => (
     <rect y="1.333" width="3" height="0.667" fill={c} />
   </>
 );
-
-const starPoints = (cx: number, cy: number, r: number) =>
-  Array.from({ length: 10 }, (_, i) => {
-    const radius = i % 2 === 0 ? r : r * 0.382;
-    const angle = -Math.PI / 2 + (i * Math.PI) / 5;
-    return `${cx + radius * Math.cos(angle)},${cy + radius * Math.sin(angle)}`;
-  }).join(" ");
 
 const euStars = Array.from({ length: 12 }, (_, i) => {
   const angle = (i * Math.PI) / 6;
