@@ -129,6 +129,22 @@
     -webkit-mask-image: radial-gradient(closest-side, black 25%, rgb(0 0 0 / 0.55) 55%, transparent 100%);
   }
 
+  /* A soft band of light that passes over the hero flag every few seconds */
+  .flag-sheen::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(110deg, transparent 35%, hsl(0 0% 100% / 0.22) 50%, transparent 65%);
+    transform: translateX(-120%);
+    animation: flag-sheen 7s ease-in-out 1.5s infinite;
+    pointer-events: none;
+  }
+
+  @keyframes flag-sheen {
+    0% { transform: translateX(-120%); }
+    30%, 100% { transform: translateX(120%); }
+  }
+
   /* EU flag logo: cinematic hover */
   .eu-logo {
     position: relative;
